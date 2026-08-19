@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SUBSTITUA AQUI: Nome da sua Marca no Título e SEO -->
+    <title>Tropa dos Ratos | Roupas Premium & Exclusivas</title>
+    <meta name="description" content="Moda urbana premium. Enviamos para todo o Brasil. Escolha os seus modelos e faça o pedido via WhatsApp.">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://jsdelivr.net"></script>
+    
+    <!-- Phosphor Icons via CDN -->
+    <script src="https://unpkg.com"></script>
+    
+    <style>
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        /* Ocultar barra de scroll padrão mantendo a funcionalidade */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden min-h-screen pb-24">
+
+    <!-- CENTRAL DE COMANDO (PLUG-AND-PLAY) -->
+    <script>
+        const SITE_CONFIG = {
+            // Configurações de Contacto
+            whatsappNumber: "5511999999999", // SUBSTITUA COM O SEU NÚMERO (Com código do país e DDD)
+            whatsappMessageBase: "Olá! Montei o meu carrinho no site e quero fechar o pedido das seguintes peças:",
+            instagramLink: "https://instagram.com", // Seu link do Instagram
+            
+            // Definição dos Produtos do Catálogo (Adicione, remova ou altere os links de imagem aqui)
+            produtos: [
+                {
+                    id: 1,
+                    nome: "Camisa Oversized Street Noir",
+                    categoria: "camisas",
+                    preco: 89.90,
+                    imagem: "https://unsplash.com" // Imagem demonstrativa de camisa
+                },
+                {
+                    id: 2,
+                    nome: "Camisa Premium Cyberpunk Gradient",
+                    categoria: "camisas",
+                    preco: 99.90,
+                    imagem: "https://unsplash.com"
+                },
+                {
+                    id: 3,
+                    nome: "Bermuda Cargo Sarja Industrial",
+                    categoria: "bermudas",
+                    preco: 119.90,
+                    imagem: "https://unsplash.com" // Imagem demonstrativa de bermuda/calção
+                },
+                {
+                    id: 4,
+                    nome: "Bermuda Moletom Heavy Confort",
+                    categoria: "bermudas",
+                    preco: 79.90,
+                    imagem: "https://unsplash.com"
+                }
+            ]
+        };
+    </script>
+
+    <!-- 1. HEADER / PERFIL (Estilo Linktree Premium) -->
+    <header class="w-full pt-10 pb-6 text-center px-4">
+        <div class="relative w-24 h-24 mx-auto mb-4 rounded-full p-1 bg-gradient-to-r from-cyan-400 to-purple-500 shadow-lg shadow-cyan-500/20">
+            <!-- Imagem de Perfil do Utilizador -->
+            <div class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center overflow-hidden">
+                <i class="ph ph-user-circle text-4xl text-slate-500"></i>
+            </div>
+        </div>
+        
+        <!-- SUBSTITUA AQUI: Nome do seu arroba ou marca -->
+        <h1 class="text-2xl font-bold tracking-tight text-white mb-1">@tropadosratos</h1>
+        <p class="text-xs text-cyan-400 font-semibold uppercase tracking-wider mb-2">⚡ Roupas Premium & Exclusivas</p>
+        <p class="text-sm text-slate-400 max-w-sm mx-auto mb-4">Enviamos para Todo o Brasil 🇧🇷 Selecione as suas peças abaixo e envie o pedido diretamente para o nosso WhatsApp.</p>
+        
+        <!-- Redes Sociais Rápidas -->
+        <div class="flex justify-center gap-4 text-xl">
+            <a id="configInstaLink" href="#" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">
+                <i class="ph ph-instagram-logo"></i>
+            </a>
+            <a id="configWhatsLink" href="#" target="_blank" class="text-slate-400 hover:text-emerald-400 transition-colors">
+                <i class="ph ph-whatsapp-logo"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- 2. SISTEMA DE ABAS (NAVEGAÇÃO DO PRODUTO) -->
+    <section class="max-w-md mx-auto px-4 mb-8">
+        <div class="flex p-1 rounded-xl bg-slate-900/80 border border-slate-800">
+            <button id="tab-todos" class="tab-btn flex-1 py-2.5 text-sm font-medium rounded-lg transition-all bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow" onclick="alterarAba('todos')">
+                Todos
+            </button>
+            <button id="tab-camisas" class="tab-btn flex-1 py-2.5 text-sm font-medium rounded-lg transition-all text-slate-400 hover:text-slate-200" onclick="alterarAba('camisas')">
+                Camisas
+            </button>
+            <button id="tab-bermudas" class="tab-btn flex-1 py-2.5 text-sm font-medium rounded-lg transition-all text-slate-400 hover:text-slate-200" onclick="alterarAba('bermudas')">
+                Bermudas
+            </button>
+        </div>
+    </section>
+
+    <!-- 3. GRADE DE PRODUTOS (CATÁLOGO DINÂMICO) -->
+    <main class="max-w-lg mx-auto px-4">
+        <div id="grid-produtos" class="grid grid-cols-2 gap-4">
+            <!-- Os cards de produtos serão renderizados aqui dinamicamente pelo JavaScript -->
+        </div>
+    </main>
+
+    <!-- 4. BARRA FIXA INFERIOR / ABA DO CARRINHO DE COMPRAS (STICKY FOOTER) -->
+    <div class="fixed bottom-0 inset-x-0 z-40 px-4 pb-4 pt-2 glass-panel border-t border-slate-900 max-w-lg mx-auto rounded-t-3xl">
+        <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5">
+                <div class="relative p-3 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400">
+                    <i class="ph ph-shopping-bag text-xl"></i>
+                    <span id="carrinho-contador" class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-purple-600 text-white text-[10px] font-bold flex items-center justify-center">0</span>
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Total do Pedido</p>
+                    <p id="carrinho-total" class="text-base font-bold text-white">R$ 0,00</p>
+                </div>
+            </div>
+            
+            <button onclick="abrirModalCarrinho()" class="flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-sm font-bold text-white shadow-lg shadow-cyan-500/10 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                Ver Meu Pedido <i class="ph ph-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 5. MODAL DA ABA DO CARRINHO (RESUMO E FINALIZAÇÃO) -->
+    <div id="modal-carrinho" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-3xl p-6 shadow-2xl transition-all max-h-[85vh] flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="ph ph-shopping-cart text-cyan-400"></i> Sacola de Compras
+                    </h3>
+                    <button onclick="fecharModalCarrinho()" class="text-slate-400 hover:text-white p-1 text-xl cursor-pointer">
+                        <i class="ph ph-x"></i>
+                    </button>
+                </div>
+
+                <!-- Lista de Itens Adicionados -->
+                <div id="carrinho-lista-itens" class="space-y-3 overflow-y-auto max-h-[45vh] pr-1 no-scrollbar">
+                    <!-- Gerado via JS. Se vazio, exibe mensagem descrita abaixo -->
+                    <p class="text-center text-sm text-slate-500 py-8">A sua sacola está vazia.</p>
+                </div>
+            </div>
+
+            <!-- Botão de Envio WhatsApp -->
+            <div class="border-t border-slate-800 pt-4 mt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-sm text-slate-400 font-medium">Subtotal das peças:</span>
+                    <span id="modal-total-valor" class="text-lg font-extrabold text-cyan-400">R$ 0,00</span>
+                </div>
+                <button onclick="enviarPedidoWhatsApp()" class="w-full py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-sm font-bold text-white transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/10 cursor-pointer">
+                    <i class="ph ph-whatsapp-logo text-xl"></i> Enviar Pedido no WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE GERENCIAMENTO DA LOJA -->
+    <script>
+        let carrinho = [];
+        let abaAtiva = 'todos';
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Inicializar links das redes sociais com base no SITE_CONFIG
+            // Inicializar links das redes sociais com base no SITE_CONFIG
+            document.getElementById("configInstaLink").href = SITE_CONFIG.instagramLink;
+            document.getElementById("configWhatsLink").href = `https://whatsapp.com{SITE_CONFIG.whatsappNumber}`;
+            
+            // Renderizar catálogo inicial
+            renderizarProdutos();
+        });
+
+        // Função para alternar e estilizar as abas de categorias
+        function alterarAba(categoria) {
+            abaAtiva = categoria;
+            
+            // Atualizar classes visuais dos botões das abas
+            document.querySelectorAll(".tab-btn").forEach(btn => {
+                btn.className = "tab-btn flex-1 py-2.5 text-sm font-medium rounded-lg transition-all text-slate-400 hover:text-slate-200";
+            });
+            
+            const btnAtivo = document.getElementById(`tab-${categoria}`);
+            if(btnAtivo) {
+                btnAtivo.className = "tab-btn flex-1 py-2.5 text-sm font-medium rounded-lg transition-all bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow";
+            }
+
+            renderizarProdutos();
+        }
+
+        // Renderiza os produtos na tela aplicando o filtro da aba selecionada
+        function renderizarProdutos() {
+            const grid = document.getElementById("grid-produtos");
+            grid.innerHTML = "";
+
+            const produtosFiltrados = SITE_CONFIG.produtos.filter(p => abaAtiva === 'todos' || p.categoria === abaAtiva);
+
+            produtosFiltrados.forEach(produto => {
+                const card = document.createElement("div");
+                card.className = "glass-card rounded-2xl overflow-hidden flex flex-col justify-between border border-slate-900 group hover:border-slate-800 transition-all";
+                card.innerHTML = `
+                    <div class="relative aspect-square w-full bg-slate-900 overflow-hidden">
+                        <img src="${produto.imagem}" alt="${produto.nome}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded bg-slate-950/80 uppercase tracking-wider text-slate-300 border border-slate-800">${produto.categoria}</span>
+                    </div>
+                    <div class="p-3.5 flex flex-col flex-1 justify-between">
+                        <h4 class="text-xs font-semibold text-slate-200 line-clamp-2 mb-2">${produto.nome}</h4>
+                        <div>
+                            <p class="text-sm font-extrabold text-white mb-2">R$ ${produto.preco.toFixed(2).replace('.', ',')}</p>
+                            <button onclick="adicionarAoCarrinho(${produto.id})" class="w-full py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:bg-slate-800 transition-all flex items-center justify-center gap-1 cursor-pointer">
+                                <i class="ph ph-plus"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Adiciona um item ao carrinho ou aumenta a quantidade se já existir
+        function adicionarAoCarrinho(id) {
+            const itemExistente = carrinho.find(item => item.id === id);
+            
+            if(itemExistente) {
+                itemExistente.quantidade += 1;
+            } else {
+                const produto = SITE_CONFIG.produtos.find(p => p.id === id);
+                carrinho.push({ ...produto, quantidade: 1 });
+            }
+
+            atualizarInterfaceCarrinho();
+        }
+
+        // Altera a quantidade de itens diretamente dentro da aba/modal do carrinho
+        function alterarQuantidade(id, mudanca) {
+            const item = carrinho.find(item => item.id === id);
+            if(!item) return;
+
+            item.quantidade += mudanca;
+            if(item.quantidade <= 0) {
+                carrinho = carrinho.filter(item => item.id !== id);
+            }
+
+            atualizarInterfaceCarrinho();
+            renderizarItensModal();
+        }
+
+        // Atualiza os valores e contadores das barras fixas de navegação
+        function atualizarInterfaceCarrinho() {
+            const totalItens = carrinho.reduce((acc, curr) => acc + curr.quantidade, 0);
+            const precoTotal = carrinho.reduce((acc, curr) => acc + (curr.preco * curr.quantidade), 0);
+
+            document.getElementById("carrinho-contador").innerText = totalItens;
+            document.getElementById("carrinho-total").innerText = `R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById("modal-total-valor").innerText = `R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Funções de abertura e fechamento do painel/modal
+        function abrirModalCarrinho() {
+            document.getElementById("modal-carrinho").classList.remove("hidden");
+            renderizarItensModal();
+        }
+
+        function fecharModalCarrinho() {
+            document.getElementById("modal-carrinho").classList.add("hidden");
+        }
+
+        // Renderiza a lista de produtos escolhidos dentro do resumo do modal
+        function renderizarItensModal() {
+            const container = document.getElementById("carrinho-lista-itens");
+            container.innerHTML = "";
+
+            if(carrinho.length === 0) {
+                container.innerHTML = `<p class="text-center text-sm text-slate-500 py-8">A sua sacola está vazia.</p>`;
+                return;
+            }
+
+            carrinho.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "flex items-center justify-between p-2 rounded-xl bg-slate-950 border border-slate-900";
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.imagem}" class="w-12 h-12 rounded-lg object-cover bg-slate-900">
+                        <div>
+                            <h5 class="text-xs font-bold text-slate-200 line-clamp-1">${item.nome}</h5>
+                            <p class="text-xs text-cyan-400 font-semibold">R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg p-1">
+                        <button onclick="alterarQuantidade(${item.id}, -1)" class="w-6 h-6 text-xs text-slate-400 hover:text-white flex items-center justify-center cursor-pointer"><i class="ph ph-minus"></i></button>
+                        <span class="text-xs font-bold px-1 text-slate-200">${item.quantidade}</span>
+                        <button onclick="alterarQuantidade(${item.id}, 1)" class="w-6 h-6 text-xs text-slate-400 hover:text-white flex items-center justify-center cursor-pointer"><i class="ph ph-plus"></i></button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Consolida a lista de compras e gera a URL para enviar direto para o WhatsApp do vendedor
+        function enviarPedidoWhatsApp() {
+            if(carrinho.length === 0) return alert("Adicione pelo menos uma peça à sacola antes de enviar!");
+
+            let textoPedido = `${SITE_CONFIG.whatsappMessageBase}\n\n`;
+            
+            carrinho.forEach(item => {
+                textoPedido += `• *${item.quantidade}x* ${item.nome} (R$ ${item.preco.toFixed(2).replace('.', ',')} cada)\n`;
+            });
+
+            const precoTotal = carrinho.reduce((acc, curr) => acc + (curr.preco * curr.quantidade), 0);
+            textoPedido += `\n*Valor Total:* R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
+
+            const urlFinal = `https://whatsapp.com{SITE_CONFIG.whatsappNumber}&text=${encodeURIComponent(textoPedido)}`;
+            window.open(urlFinal, '_blank');
+        }
+    </script>
+</body>
+</html>
