@@ -1,233 +1,601 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SUBSTITUA AQUI: Nome da sua Marca no Título e SEO -->
-    <title>Tropa dos Ratos | Roupas Premium & Exclusivas</title>
-    <meta name="description" content="Moda urbana premium. Enviamos para todo o Brasil. Escolha os seus modelos e faça o pedido via WhatsApp.">
+    <title>Tropa dos Ratos | Roupas Premium</title>
     
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://jsdelivr.net"></script>
-    
-    <!-- Phosphor Icons via CDN -->
-    <script src="https://unpkg.com"></script>
-    
+    <!-- Ícones via CDN (Super leve e não quebra) -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+
     <style>
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.75);
+        /* DESIGN PRESET - DARK MODE PREMIUM */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            min-height: 100vh;
+            padding-bottom: 100px;
+            overflow-x: hidden;
+        }
+
+        /* HEADER & PERFIL STYLE */
+        header {
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .profile-img-container {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 16px auto;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.3);
+        }
+
+        .profile-img-fallback {
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #38bdf8;
+            font-size: 32px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #22d3ee;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .bio {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.5;
+            max-width: 360px;
+            margin: 0 auto 16px auto;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .social-icons a {
+            color: #64748b;
+            transition: color 0.2s;
+        }
+        .social-icons a:hover { color: #f8fafc; }
+
+        /* ABAS / TABS NAVIGATION */
+        .tabs-container {
+            max-width: 450px;
+            margin: 0 auto 24px auto;
+            padding: 0 16px;
+        }
+
+        .tabs-wrapper {
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
+            padding: 4px;
+            border-radius: 12px;
+            display: flex;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+        }
+
+        /* PRODUTOS GRID */
+        .catalog-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-cols: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .product-card {
+            background: rgba(30, 41, 59, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(8px);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .image-placeholder i {
+            font-size: 40px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #64748b, #475569);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .image-placeholder span {
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 36px;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .add-btn {
+            width: 100%;
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
+            color: #e2e8f0;
+            padding: 8px 0;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .add-btn:hover {
+            background-color: #1e293b;
+            color: #ffffff;
+        }
+
+        /* BARRA FIXA INFERIOR (CARRINHO) */
+        .cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 500px;
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px;
+            border-radius: 20px 20px 0 0;
+            z-index: 99;
+            display: flex;
+            align-items: center;
+            justify-content: justify;
+            gap: 16px;
         }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.35);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+
+        .cart-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        /* Ocultar barra de scroll padrão mantendo a funcionalidade */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .cart-icon-box {
+            position: relative;
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #06b6d4;
+            font-size: 18px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background-color: #8b5cf6;
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-values p:first-child {
+            font-size: 10px;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .cart-values p:last-child {
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .checkout-btn {
+            flex-grow: 1;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.15);
+        }
+
+        /* MODAL DO CARRINHO OVERLAY */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-content {
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 24px;
+            padding: 20px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .items-list {
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background-color: #020617;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .item-details h5 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 4px;
+        }
+
+        .item-details p {
+            font-size: 12px;
+            color: #06b6d4;
+            font-weight: 700;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #0f172a;
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 1px solid #1e293b;
+        }
+
+        .qty-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 12px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .qty-num {
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #1e293b;
+            padding-top: 14px;
+            margin-top: auto;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .total-row span:first-child {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .total-row span:last-child {
+            font-size: 18px;
+            font-weight: 800;
+            color: #06b6d4;
+        }
+
+        .whatsapp-btn {
+            width: 100%;
+            background-color: #10b981;
+            border: none;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #059669;
+        }
+
+        .empty-text {
+            text-align: center;
+            color: #475569;
+            font-size: 13px;
+            padding: 40px 0;
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden min-h-screen pb-24">
+<body>
 
-    <!-- CENTRAL DE COMANDO (PLUG-AND-PLAY) -->
-    <script>
-        const SITE_CONFIG = {
-            // Configurações de Contacto
-            whatsappNumber: "5511999999999", // SUBSTITUA COM O SEU NÚMERO (Com código do país e DDD)
-            whatsappMessageBase: "Olá! Montei o meu carrinho no site e quero fechar o pedido das seguintes peças:",
-            instagramLink: "https://instagram.com", // Seu link do Instagram
-            
-            // Definição dos Produtos do Catálogo (Adicione, remova ou altere os links de imagem aqui)
-            produtos: [
-                {
-                    id: 1,
-                    nome: "Camisa Oversized Street Noir",
-                    categoria: "camisas",
-                    preco: 89.90,
-                    imagem: "https://unsplash.com" // Imagem demonstrativa de camisa
-                },
-                {
-                    id: 2,
-                    nome: "Camisa Premium Cyberpunk Gradient",
-                    categoria: "camisas",
-                    preco: 99.90,
-                    imagem: "https://unsplash.com"
-                },
-                {
-                    id: 3,
-                    nome: "Bermuda Cargo Sarja Industrial",
-                    categoria: "bermudas",
-                    preco: 119.90,
-                    imagem: "https://unsplash.com" // Imagem demonstrativa de bermuda/calção
-                },
-                {
-                    id: 4,
-                    nome: "Bermuda Moletom Heavy Confort",
-                    categoria: "bermudas",
-                    preco: 79.90,
-                    imagem: "https://unsplash.com"
-                }
-            ]
-        };
-    </script>
-
-    <!-- 1. HEADER / PERFIL (Estilo Linktree Premium) -->
-    <header class="w-full pt-10 pb-6 text-center px-4">
-        <div class="relative w-24 h-24 mx-auto mb-4 rounded-full p-1 bg-gradient-to-r from-cyan-400 to-purple-500 shadow-lg shadow-cyan-500/20">
-            <!-- Imagem de Perfil do Utilizador -->
-            <div class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center overflow-hidden">
-                <i class="ph ph-user-circle text-4xl text-slate-500"></i>
+    <header>
+        <div class="profile-img-container">
+            <div class="profile-img-fallback">
+                <i class="fa-solid fa-user-ninja"></i>
             </div>
         </div>
+        <h1>@tropadosratos</h1>
+        <div class="badge">⚡ Roupas Premium & Exclusivas</div>
+        <p class="bio">Enviamos para Todo o Brasil 🇧🇷<br>Escolha as suas peças abaixo e faça o pedido direto no nosso WhatsApp.</p>
         
-        <!-- SUBSTITUA AQUI: Nome do seu arroba ou marca -->
-        <h1 class="text-2xl font-bold tracking-tight text-white mb-1">@tropadosratos</h1>
-        <p class="text-xs text-cyan-400 font-semibold uppercase tracking-wider mb-2">⚡ Roupas Premium & Exclusivas</p>
-        <p class="text-sm text-slate-400 max-w-sm mx-auto mb-4">Enviamos para Todo o Brasil 🇧🇷 Selecione as suas peças abaixo e envie o pedido diretamente para o nosso WhatsApp.</p>
-        
-        <!-- Redes Sociais Rápidas -->
-        <div class="flex justify-center gap-4 text-xl">
-            <a id="configInstaLink" href="#" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">
-                <i class="ph ph-instagram-logo"></i>
-            </a>
-            <a id="configWhatsLink" href="#" target="_blank" class="text-slate-400 hover:text-emerald-400 transition-colors">
-                <i class="ph ph-whatsapp-logo"></i>
-            </a>
+        <div class="social-icons">
+            <a id="instaLink" href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a id="whatsLink" href="#" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
     </header>
 
-    <!-- 2. SISTEMA DE ABAS (NAVEGAÇÃO DO PRODUTO) -->
-    <section class="max-w-md mx-auto px-4 mb-8">
-        <div class="flex p-1 rounded-xl bg-slate-900/80 border border-slate-800">
-            <button id="tab-todos" class="tab-btn flex-1 py-2.5 text-sm font-medium rounded-lg transition-all bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow" onclick="alterarAba('todos')">
-                Todos
-            </button>
-            <button id="tab-camisas" class="tab-btn flex-1 py-2.5 text-sm font-medium rounded-lg transition-all text-slate-400 hover:text-slate-200" onclick="alterarAba('camisas')">
-                Camisas
-            </button>
-            <button id="tab-bermudas" class="tab-btn flex-1 py-2.5 text-sm font-medium rounded-lg transition-all text-slate-400 hover:text-slate-200" onclick="alterarAba('bermudas')">
-                Bermudas
-            </button>
+    <section class="tabs-container">
+        <div class="tabs-wrapper">
+            <button id="tab-todos" class="tab-btn active" onclick="alterarAba('todos')">Todos</button>
+            <button id="tab-camisas" class="tab-btn" onclick="alterarAba('camisas')">Camisas</button>
+            <button id="tab-bermudas" class="tab-btn" onclick="alterarAba('bermudas')">Bermudas</button>
         </div>
     </section>
 
-    <!-- 3. GRADE DE PRODUTOS (CATÁLOGO DINÂMICO) -->
-    <main class="max-w-lg mx-auto px-4">
-        <div id="grid-produtos" class="grid grid-cols-2 gap-4">
-            <!-- Os cards de produtos serão renderizados aqui dinamicamente pelo JavaScript -->
-        </div>
+    <main class="catalog-container">
+        <div id="grid-produtos" class="products-grid"></div>
     </main>
 
-    <!-- 4. BARRA FIXA INFERIOR / ABA DO CARRINHO DE COMPRAS (STICKY FOOTER) -->
-    <div class="fixed bottom-0 inset-x-0 z-40 px-4 pb-4 pt-2 glass-panel border-t border-slate-900 max-w-lg mx-auto rounded-t-3xl">
-        <div class="flex items-center justify-between gap-4">
-            <div class="flex items-center gap-2.5">
-                <div class="relative p-3 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400">
-                    <i class="ph ph-shopping-bag text-xl"></i>
-                    <span id="carrinho-contador" class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-purple-600 text-white text-[10px] font-bold flex items-center justify-center">0</span>
-                </div>
-                <div>
-                    <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Total do Pedido</p>
-                    <p id="carrinho-total" class="text-base font-bold text-white">R$ 0,00</p>
-                </div>
+    <div class="cart-bar">
+        <div class="cart-info">
+            <div class="cart-icon-box">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span id="carrinho-contador" class="cart-count">0</span>
             </div>
-            
-            <button onclick="abrirModalCarrinho()" class="flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-sm font-bold text-white shadow-lg shadow-cyan-500/10 transition-all flex items-center justify-center gap-2 cursor-pointer">
-                Ver Meu Pedido <i class="ph ph-arrow-right"></i>
-            </button>
+            <div class="cart-values">
+                <p>Total</p>
+                <p id="carrinho-total">R$ 0,00</p>
+            </div>
         </div>
+        <button onclick="abrirModal()" class="checkout-btn">
+            Ver Pedido <i class="fa-solid fa-arrow-right"></i>
+        </button>
     </div>
 
-    <!-- 5. MODAL DA ABA DO CARRINHO (RESUMO E FINALIZAÇÃO) -->
-    <div id="modal-carrinho" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-3xl p-6 shadow-2xl transition-all max-h-[85vh] flex flex-col justify-between">
-            <div>
-                <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
-                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                        <i class="ph ph-shopping-cart text-cyan-400"></i> Sacola de Compras
-                    </h3>
-                    <button onclick="fecharModalCarrinho()" class="text-slate-400 hover:text-white p-1 text-xl cursor-pointer">
-                        <i class="ph ph-x"></i>
-                    </button>
-                </div>
-
-                <!-- Lista de Itens Adicionados -->
-                <div id="carrinho-lista-itens" class="space-y-3 overflow-y-auto max-h-[45vh] pr-1 no-scrollbar">
-                    <!-- Gerado via JS. Se vazio, exibe mensagem descrita abaixo -->
-                    <p class="text-center text-sm text-slate-500 py-8">A sua sacola está vazia.</p>
-                </div>
+    <div id="modal-carrinho" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title"><i class="fa-solid fa-cart-shopping" style="color: #06b6d4;"></i> Sacola de Compras</div>
+                <button onclick="fecharModal()" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <!-- Botão de Envio WhatsApp -->
-            <div class="border-t border-slate-800 pt-4 mt-6">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-sm text-slate-400 font-medium">Subtotal das peças:</span>
-                    <span id="modal-total-valor" class="text-lg font-extrabold text-cyan-400">R$ 0,00</span>
+            
+            <div id="carrinho-lista-itens" class="items-list">
+                <!-- Gerado dinamicamente via JS -->
+            </div>
+            
+            <div class="modal-footer">
+                <div class="total-row">
+                    <span>Subtotal das peças:</span>
+                    <span id="modal-total-valor">R$ 0,00</span>
                 </div>
-                <button onclick="enviarPedidoWhatsApp()" class="w-full py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-sm font-bold text-white transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/10 cursor-pointer">
-                    <i class="ph ph-whatsapp-logo text-xl"></i> Enviar Pedido no WhatsApp
+                <button onclick="enviarPedidoWhatsApp()" class="whatsapp-btn">
+                    <i class="fa-brands fa-whatsapp"></i> Enviar Pedido no WhatsApp
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT DE GERENCIAMENTO DA LOJA -->
     <script>
+        const SITE_CONFIG = {
+            whatsappNumber: "5511999999999", // SUBSTITUA COM O SEU WHATSAPP REAL (DDD + Número)
+            whatsappMessageBase: "Olá! Montei o meu carrinho no site e quero fazer o pedido destas peças:",
+            instagramLink: "https://instagram.com",
+            
+            produtos: [
+                { id: 1, nome: "Camisa Oversized Street Noir", categoria: "camisas", preco: 89.90 },
+                { id: 2, nome: "Camisa Premium Cyberpunk", categoria: "camisas", preco: 99.90 },
+                { id: 3, nome: "Bermuda Cargo Sarja Industrial", categoria: "bermudas", preco: 119.90 },
+                { id: 4, nome: "Bermuda Moletom Heavy Comfort", categoria: "bermudas", preco: 79.90 }
+            ]
+        };
+
         let carrinho = [];
         let abaAtiva = 'todos';
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Inicializar links das redes sociais com base no SITE_CONFIG
-            // Inicializar links das redes sociais com base no SITE_CONFIG
-            document.getElementById("configInstaLink").href = SITE_CONFIG.instagramLink;
-            document.getElementById("configWhatsLink").href = `https://whatsapp.com{SITE_CONFIG.whatsappNumber}`;
-            
-            // Renderizar catálogo inicial
+            document.getElementById("instaLink").href = SITE_CONFIG.instagramLink;
+            document.getElementById("whatsLink").href = `https://whatsapp.com{SITE_CONFIG.whatsappNumber}`;
             renderizarProdutos();
         });
 
-        // Função para alternar e estilizar as abas de categorias
         function alterarAba(categoria) {
             abaAtiva = categoria;
-            
-            // Atualizar classes visuais dos botões das abas
-            document.querySelectorAll(".tab-btn").forEach(btn => {
-                btn.className = "tab-btn flex-1 py-2.5 text-sm font-medium rounded-lg transition-all text-slate-400 hover:text-slate-200";
-            });
-            
-            const btnAtivo = document.getElementById(`tab-${categoria}`);
-            if(btnAtivo) {
-                btnAtivo.className = "tab-btn flex-1 py-2.5 text-sm font-medium rounded-lg transition-all bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow";
-            }
-
+            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+            document.getElementById(`tab-${categoria}`).classList.add("active");
             renderizarProdutos();
         }
 
-        // Renderiza os produtos na tela aplicando o filtro da aba selecionada
         function renderizarProdutos() {
             const grid = document.getElementById("grid-produtos");
             grid.innerHTML = "";
 
-            const produtosFiltrados = SITE_CONFIG.produtos.filter(p => abaAtiva === 'todos' || p.categoria === abaAtiva);
+            const filtrados = SITE_CONFIG.produtos.filter(p => abaAtiva === 'todos' || p.categoria === abaAtiva);
 
-            produtosFiltrados.forEach(produto => {
+            filtrados.forEach(p => {
                 const card = document.createElement("div");
-                card.className = "glass-card rounded-2xl overflow-hidden flex flex-col justify-between border border-slate-900 group hover:border-slate-800 transition-all";
+                card.className = "product-card";
+                const icone = p.categoria === 'camisas' ? 'fa-shirt' : 'fa-socks';
+                
                 card.innerHTML = `
-                    <div class="relative aspect-square w-full bg-slate-900 overflow-hidden">
-                        <img src="${produto.imagem}" alt="${produto.nome}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <span class="absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded bg-slate-950/80 uppercase tracking-wider text-slate-300 border border-slate-800">${produto.categoria}</span>
+                    <div class="image-placeholder">
+                        <i class="fa-solid ${icone}"></i>
+                        <span>PREMIUM ITEM</span>
                     </div>
-                    <div class="p-3.5 flex flex-col flex-1 justify-between">
-                        <h4 class="text-xs font-semibold text-slate-200 line-clamp-2 mb-2">${produto.nome}</h4>
+                    <div class="product-info">
+                        <h4 class="product-title">${p.nome}</h4>
                         <div>
-                            <p class="text-sm font-extrabold text-white mb-2">R$ ${produto.preco.toFixed(2).replace('.', ',')}</p>
-                            <button onclick="adicionarAoCarrinho(${produto.id})" class="w-full py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:bg-slate-800 transition-all flex items-center justify-center gap-1 cursor-pointer">
-                                <i class="ph ph-plus"></i> Adicionar
+                            <p class="product-price">R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
+                            <button onclick="adicionarAoCarrinho(${p.id})" class="add-btn">
+                                <i class="fa-solid fa-plus"></i> Adicionar
                             </button>
                         </div>
                     </div>
@@ -236,100 +604,87 @@
             });
         }
 
-        // Adiciona um item ao carrinho ou aumenta a quantidade se já existir
         function adicionarAoCarrinho(id) {
-            const itemExistente = carrinho.find(item => item.id === id);
-            
-            if(itemExistente) {
-                itemExistente.quantidade += 1;
+            const existe = carrinho.find(item => item.id === id);
+            if(existe) {
+                existe.quantidade += 1;
             } else {
-                const produto = SITE_CONFIG.produtos.find(p => p.id === id);
-                carrinho.push({ ...produto, quantidade: 1 });
+                const p = SITE_CONFIG.produtos.find(prod => prod.id === id);
+                carrinho.push({ ...p, quantidade: 1 });
             }
-
-            atualizarInterfaceCarrinho();
+            atualizarInterface();
         }
 
-        // Altera a quantidade de itens diretamente dentro da aba/modal do carrinho
-        function alterarQuantidade(id, mudanca) {
-            const item = carrinho.find(item => item.id === id);
+        function alterarQuantidade(id, valor) {
+            const item = carrinho.find(i => i.id === id);
             if(!item) return;
-
-            item.quantidade += mudanca;
+            item.quantidade += valor;
             if(item.quantidade <= 0) {
-                carrinho = carrinho.filter(item => item.id !== id);
+                carrinho = carrinho.filter(i => i.id !== id);
             }
-
-            atualizarInterfaceCarrinho();
+            atualizarInterface();
             renderizarItensModal();
         }
 
-        // Atualiza os valores e contadores das barras fixas de navegação
-        function atualizarInterfaceCarrinho() {
-            const totalItens = carrinho.reduce((acc, curr) => acc + curr.quantidade, 0);
-            const precoTotal = carrinho.reduce((acc, curr) => acc + (curr.preco * curr.quantidade), 0);
+        function atualizarInterface() {
+            const totalItens = carrinho.reduce((acc, c) => acc + c.quantidade, 0);
+            const precoTotal = carrinho.reduce((acc, c) => acc + (c.preco * c.quantidade), 0);
 
             document.getElementById("carrinho-contador").innerText = totalItens;
             document.getElementById("carrinho-total").innerText = `R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById("modal-total-valor").innerText = `R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
         }
 
-        // Funções de abertura e fechamento do painel/modal
-        function abrirModalCarrinho() {
-            document.getElementById("modal-carrinho").classList.remove("hidden");
+        function abrirModal() {
+            document.getElementById("modal-carrinho").style.display = "flex";
             renderizarItensModal();
         }
 
-        function fecharModalCarrinho() {
-            document.getElementById("modal-carrinho").classList.add("hidden");
+        document.getElementById("modal-carrinho").addEventListener("click", (e) => {
+            if(e.target.id === "modal-carrinho") fecharModal();
+        });
+
+        function fecharModal() {
+            document.getElementById("modal-carrinho").style.display = "none";
         }
 
-        // Renderiza a lista de produtos escolhidos dentro do resumo do modal
         function renderizarItensModal() {
             const container = document.getElementById("carrinho-lista-itens");
             container.innerHTML = "";
 
             if(carrinho.length === 0) {
-                container.innerHTML = `<p class="text-center text-sm text-slate-500 py-8">A sua sacola está vazia.</p>`;
+                container.innerHTML = `<p class="empty-text">A sua sacola está vazia.</p>`;
                 return;
             }
 
             carrinho.forEach(item => {
                 const div = document.createElement("div");
-                div.className = "flex items-center justify-between p-2 rounded-xl bg-slate-950 border border-slate-900";
+                div.className = "cart-item";
                 div.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <img src="${item.imagem}" class="w-12 h-12 rounded-lg object-cover bg-slate-900">
-                        <div>
-                            <h5 class="text-xs font-bold text-slate-200 line-clamp-1">${item.nome}</h5>
-                            <p class="text-xs text-cyan-400 font-semibold">R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}</p>
-                        </div>
+                    <div class="item-details">
+                        <h5>${item.nome}</h5>
+                        <p>R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}</p>
                     </div>
-                    <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg p-1">
-                        <button onclick="alterarQuantidade(${item.id}, -1)" class="w-6 h-6 text-xs text-slate-400 hover:text-white flex items-center justify-center cursor-pointer"><i class="ph ph-minus"></i></button>
-                        <span class="text-xs font-bold px-1 text-slate-200">${item.quantidade}</span>
-                        <button onclick="alterarQuantidade(${item.id}, 1)" class="w-6 h-6 text-xs text-slate-400 hover:text-white flex items-center justify-center cursor-pointer"><i class="ph ph-plus"></i></button>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="alterarQuantidade(${item.id}, -1)"><i class="fa-solid fa-minus"></i></button>
+                        <span class="qty-num">${item.quantidade}</span>
+                        <button class="qty-btn" onclick="alterarQuantidade(${item.id}, 1)"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
-        // Consolida a lista de compras e gera a URL para enviar direto para o WhatsApp do vendedor
         function enviarPedidoWhatsApp() {
-            if(carrinho.length === 0) return alert("Adicione pelo menos uma peça à sacola antes de enviar!");
+            if(carrinho.length === 0) return alert("Adicione algo à sacola primeiro!");
 
-            let textoPedido = `${SITE_CONFIG.whatsappMessageBase}\n\n`;
-            
-            carrinho.forEach(item => {
-                textoPedido += `• *${item.quantidade}x* ${item.nome} (R$ ${item.preco.toFixed(2).replace('.', ',')} cada)\n`;
+            let msg = `${SITE_CONFIG.whatsappMessageBase}\n\n`;
+            carrinho.forEach(i => {
+                msg += `• *${i.quantidade}x* ${i.nome} (R$ ${i.preco.toFixed(2).replace('.', ',')} cada)\n`;
             });
+            msg += `\n*Total:* R$ ${carrinho.reduce((acc, c) => acc + (c.preco * c.quantidade), 0).toFixed(2).replace('.', ',')}`;
 
-            const precoTotal = carrinho.reduce((acc, curr) => acc + (curr.preco * curr.quantidade), 0);
-            textoPedido += `\n*Valor Total:* R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
-
-            const urlFinal = `https://whatsapp.com{SITE_CONFIG.whatsappNumber}&text=${encodeURIComponent(textoPedido)}`;
-            window.open(urlFinal, '_blank');
+            window.open(`https://whatsapp.com{SITE_CONFIG.whatsappNumber}&text=${encodeURIComponent(msg)}`, '_blank');
         }
     </script>
 </body>
