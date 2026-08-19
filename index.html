@@ -676,15 +676,25 @@
         }
 
         function enviarPedidoWhatsApp() {
-            if(carrinho.length === 0) return alert("Adicione algo à sacola primeiro!");
+            if (carrinho.length === 0) {
+                alert("Adicione algo à sacola primeiro!");
+                return;
+            }
 
-            let msg = `${SITE_CONFIG.whatsappMessageBase}\n\n`;
-            carrinho.forEach(i => {
-                msg += `• *${i.quantidade}x* ${i.nome} (R$ ${i.preco.toFixed(2).replace('.', ',')} cada)\n`;
-            });
-            msg += `\n*Total:* R$ ${carrinho.reduce((acc, c) => acc + (c.preco * c.quantidade), 0).toFixed(2).replace('.', ',')}`;
+            let msg = "Olá! Montei o meu carrinho no site e quero fazer o pedido destas peças:\n\n";
+            
+            for (let i = 0; i < carrinho.length; i++) {
+                let item = carrinho[i];
+                msg += "• " + item.quantidade + "x " + item.nome + " (R$ " + item.preco.toFixed(2).replace('.', ',') + " cada)\n";
+            }
+            
+            let totalPedido = carrinho.reduce((acc, c) => acc + (c.preco * c.quantidade), 0);
+            msg += "\n*Total:* R$ " + totalPedido.toFixed(2).replace('.', ',');
 
-            window.open(`https://whatsapp.com{SITE_CONFIG.whatsappNumber}&text=${encodeURIComponent(msg)}`, '_blank');
+            let numeroTelefone = SITE_CONFIG.whatsappNumber;
+            let linkFinal = "https://whatsapp.com" + numeroTelefone + "&text=" + encodeURIComponent(msg);
+            
+            window.open(linkFinal, "_blank");
         }
     </script>
 </body>
