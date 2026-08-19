@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tropa dos Ratos | Catálogo de Moda Premium</title>
+    
+    <!-- Ícones FontAwesome para uso estável offline/online -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* BASE PREMIUM DARK DESIGN */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            min-height: 100vh;
+            padding-bottom: 110px;
+            overflow-x: hidden;
+        }
+
+        /* HEADER & AVATAR ESTILO LINKTREE */
+        header {
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .avatar-container {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 16px auto;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.4);
+        }
+
+        .avatar-fallback {
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #22d3ee;
+            font-size: 32px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+            background: linear-gradient(to right, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badge-premium {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #22d3ee;
+            letter-spacing: 1px;
+            background: rgba(6, 182, 212, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            margin-bottom: 14px;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.5;
+            max-width: 360px;
+            margin: 0 auto 18px auto;
+        }
+
+        .social-row {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .social-row a {
+            color: #64748b;
+            transition: all 0.2s;
+        }
+        .social-row a:hover {
+            color: #f8fafc;
+            transform: scale(1.1);
+        }
+
+        /* NAVEGAÇÃO POR ABAS COESA */
+        .tabs-area {
+            max-width: 450px;
+            margin: 0 auto 28px auto;
+            padding: 0 16px;
+        }
+
+        .tabs-bg {
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
+            padding: 4px;
+            border-radius: 14px;
+            display: flex;
+        }
+
+        .tab-link {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            padding: 12px 0;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .tab-link.active {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.25);
+        }
+
+        /* GRADE ASSIMÉTRICA DE PRODUTOS */
+        .store-front {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .products-layout {
+            display: grid;
+            grid-template-cols: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .product-card {
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .product-card:hover {
+            border-color: rgba(6, 182, 212, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .img-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .img-box i {
+            font-size: 42px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #a7f3d0, #06b6d4);
+            if (p.categoria === 'bermudas') background: linear-gradient(135deg, #c084fc, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .img-box span {
+            font-size: 10px;
+            font-weight: 700;
+            color: #64748b;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .info-box {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .title-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 36px;
+        }
+
+        .price-text {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .buy-action-btn {
+            width: 100%;
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
+            color: #e2e8f0;
+            padding: 9px 0;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .buy-action-btn:hover {
+            background-color: #1e293b;
+            color: #ffffff;
+            border-color: #475569;
+        }
+
+        /* BOTTOM STICKY BAR FOR CART */
+        .bottom-cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 500px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px;
+            border-radius: 24px 24px 0 0;
+            z-index: 99;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+        }
+
+        .left-metrics {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-wrapper-relative {
+            position: relative;
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #22d3ee;
+            font-size: 18px;
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: linear-gradient(135deg, #cf84fc, #8b5cf6);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #0f172a;
+        }
+
+        .values-summary p:first-child {
+            font-size: 10px;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .values-summary p:last-child {
+            font-size: 17px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .trigger-modal-btn {
+            flex-grow: 1;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            border: none;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.2);
+            transition: all 0.2s;
+        }
+
+        .trigger-modal-btn:hover {
+            opacity: 0.95;
+            transform: scale(0.99);
+        }
+
+        /* SLIDE OVERLAY DIALOG MODAL */
+        .modal-mask {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 999;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .dialog-frame {
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 28px;
+            padding: 24px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.7);
+        }
+
+        .dialog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #1e293b;
+            margin-bottom: 18px;
+        }
+
+        .dialog-title {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dismiss-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 22px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .dismiss-btn:hover { color: #f8fafc; }
+
+        .items-scrollbar-box {
+            overflow-y: auto;
+            flex-grow: 1;
+            margin-bottom: 18px;
+            padding-right: 4px;
+        }
+
+        /* Custom Scrollbar for clean UI */
+        .items-scrollbar-box::-webkit-scrollbar { width: 4px; }
+        .items-scrollbar-box::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background-color: #020617;
+            border: 1px solid #1e293b;
+            border-radius: 14px;
+            margin-bottom: 12px;
+        }
+
+        .meta-details h5 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 4px;
+        }
+
+        .meta-details p {
+            font-size: 12px;
+            color: #06b6d4;
+            font-weight: 700;
+        }
+
+        .stepper-widget {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #0f172a;
+            padding: 6px 10px;
+            border-radius: 10px;
+            border: 1px solid #1e293b;
+        }
+
+        .step-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 12px;
+            cursor: pointer;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+        .step-btn:hover { color: white; }
+
+        .step-display {
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+            min-width: 14px;
+            text-align: center;
+        }
+
+        .dialog-footer {
+            border-top: 1px solid #1e293b;
+            padding-top: 16px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .summary-row span:first-child {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .summary-row span:last-child {
+            font-size: 19px;
+            font-weight: 800;
+            color: #22d3ee;
+        }
+
+        .whatsapp-dispatch-btn {
+            width: 100%;
+            background-color: #10b981;
+            border: none;
+            color: white;
+            padding: 15px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+            transition: background-color 0.2s;
+        }
+
+        .whatsapp-dispatch-btn:hover {
+            background-color: #059669;
+        }
+
+        .empty-placeholder-text {
+            text-align: center;
+            color: #475569;
+            font-size: 13px;
+            padding: 40px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CENTRAL DE COMANDO PLUG-AND-PLAY GLOBAL -->
+    <script>
+        const SITE_CONFIG = {
+            whatsappNumber: "5511999999999", // ADICIONE O SEU NÚMERO DE TELEFONE COM DDD E CÓDIGO DO PAÍS (APENAS NÚMEROS)
+            whatsappMessageBase: "Olá! Montei o meu carrinho no site e quero fazer o pedido destas peças:",
+            instagramLink: "https://instagram.com/tropadosratos",
+            
+            // Catálogo Completo Prontinho para Edição Fácil
+            produtos: [
+                { id: 1, nome: "Camisa Oversized Street Noir", categoria: "camisas", preco: 89.90 },
+                { id: 2, nome: "Camisa Premium Cyberpunk", categoria: "camisas", preco: 99.90 },
+                { id: 3, nome: "Bermuda Cargo Sarja Industrial", categoria: "bermudas", preco: 119.90 },
+                { id: 4, nome: "Bermuda Moletom Heavy Comfort", categoria: "bermudas", preco: 79.90 }
+            ]
+        };
+    </script>
+
+    <!-- HEADER DE PERFIL -->
+    <header>
+        <div class="avatar-container">
+            <div class="avatar-fallback">
+                <i class="fa-solid fa-user-ninja"></i>
+            </div>
+        </div>
+        <h1>@tropadosratos</h1>
+        <div class="badge-premium">⚡ Roupas Premium & Exclusivas</div>
+        <p class="description">Enviamos para Todo o Brasil 🇧🇷<br>Escolha os seus modelos e feche o seu pedido de forma prática via WhatsApp.</p>
+        
+        <div class="social-row">
+            <a id="instaAnchor" href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a id="whatsAnchor" href="#" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+    </header>
+
+    <!-- SISTEMA DE REPRODUÇÃO POR ABAS -->
+    <section class="tabs-area">
+        <div class="tabs-bg">
+            <button id="tab-todos" class="tab-link active" onclick="navegarParaAba('todos')">Todos</button>
+            <button id="tab-camisas" class="tab-link" onclick="navegarParaAba('camisas')">Camisas</button>
+            <button id="tab-bermudas" class="tab-link" onclick="navegarParaAba('bermudas')">Bermudas</button>
+        </div>
+    </section>
+
+    <!-- LOJA / PRODUTOS -->
+    <main class="store-front">
+        <div id="grid-produtos" class="products-layout"></div>
+    </main>
+
+    <!-- FLOATING TAB / BOTTOM BAR DO CARRINHO -->
+    <div class="bottom-cart-bar">
+        <div class="left-metrics">
+            <div class="icon-wrapper-relative">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span id="carrinho-contador" class="badge-count">0</span>
+            </div>
+            <div class="values-summary">
+                <p>Total</p>
+                <p id="carrinho-total">R$ 0,00</p>
+            </div>
+        </div>
+        <button onclick="exibirModalDialog()" class="trigger-modal-btn">
+            Ver Pedido <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <!-- DIALOG COMPLETO DO CARRINHO -->
+    <div id="modal-carrinho" class="modal-mask">
+        <div class="dialog-frame">
+            <div class="dialog-header">
+                <div class="dialog-title">
+                    <i class="fa-solid fa-cart-shopping" style="color: #06b6d4;"></i> 
+                    Sua Sacola de Compras
+                </div>
+                <button onclick="ocultarModalDialog()" class="dismiss-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- Lista Dinâmica Rerenderizada -->
+            <div id="carrinho-lista-itens" class="items-scrollbar-box"></div>
+            
+            <div class="dialog-footer">
+                <div class="summary-row">
+                    <span>Subtotal do Pedido:</span>
+                    <span id="modal-total-valor">R$ 0,00</span>
+                </div>
+                <button onclick="enviarPedidoWhatsApp()" class="whatsapp-dispatch-btn">
+                    <i class="fa-brands fa-whatsapp"></i> Concluir Pedido no WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CORE BUSINESS FRONTEND SCRIPT -->
+    <script>
+        let carrinho = [];
+        let filtroCategoria = 'todos';
+
+        // Inicialização básica conectando os dados
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("instaAnchor").href = SITE_CONFIG.instagramLink;
+            document.getElementById("whatsAnchor").href = `https://api.whatsapp.com/send?phone=${SITE_CONFIG.whatsappNumber}`;
+            renderizarCatalogo();
+        });
+
+        // Alternância de abas sem frameworks
+        function navegarParaAba(slug) {
+            filtroCategoria = slug;
+            document.querySelectorAll(".tab-link").forEach(el => el.classList.remove("active"));
+            document.getElementById(`tab-${slug}`).classList.add("active");
+            renderizarCatalogo();
+        }
+
+        // Renderização limpa injetando os cards estruturados
+        function renderizarCatalogo() {
+            const wrapper = document.getElementById("grid-produtos");
+            wrapper.innerHTML = "";
+
+            const listaFiltrada = SITE_CONFIG.produtos.filter(item => filtroCategoria === 'todos' || item.categoria === filtroCategoria);
+
+            listaFiltrada.forEach(prod => {
+                const elementoCard = document.createElement("div");
+                elementoCard.className = "product-card";
+                
+                // Escolha inteligente de ícones visuais nativos
+                const classeIcone = prod.categoria === 'camisas' ? 'fa-shirt' : 'fa-socks';
+                
+                elementoCard.innerHTML = `
+                    <div class="img-box">
+                        <i class="fa-solid ${classeIcone}"></i>
+                        <span>PREMIUM CLOTHES</span>
+                    </div>
+                    <div class="info-box">
+                        <h4 class="title-text">${prod.nome}</h4>
+                        <div>
+                            <p class="price-text">R$ ${prod.preco.toFixed(2).replace('.', ',')}</p>
+                            <button onclick="acrescentarItem(${prod.id})" class="buy-action-btn">
+                                <i class="fa-solid fa-plus"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                wrapper.appendChild(elementoCard);
+            });
+        }
+
+        // Adicionar itens com lógica incremental
+        function acrescentarItem(idAlvo) {
+            const correspondencia = carrinho.find(box => box.id === idAlvo);
+            if (correspondencia) {
+                correspondencia.quantidade += 1;
+            } else {
+                const metaOriginal = SITE_CONFIG.produtos.find(p => p.id === idAlvo);
+                carrinho.push({ ...metaOriginal, quantidade: 1 });
+            }
+            atualizarLayoutGlobal();
+        }
+
+        // Modificador de quantidades de itens de dentro da sacola
+        function mudarQuantidadeItem(idAlvo, alteracao) {
+            const correspondencia = carrinho.find(box => box.id === idAlvo);
+            if (!correspondencia) return;
+            
+            correspondencia.quantidade += alteracao;
+            if (correspondencia.quantidade <= 0) {
+                carrinho = carrinho.filter(box => box.id !== idAlvo);
+            }
+            
+            atualizarLayoutGlobal();
+            renderizarListaInternaModal();
+        }
+
+        // Atualizar painéis de precificação e totalizadores
+        function atualizarLayoutGlobal() {
+            const volumetriaTotal = carrinho.reduce((acc, obj) => acc + obj.quantidade, 0);
+            const caixaFinanceiroTotal = carrinho.reduce((acc, obj) => acc + (obj.preco * obj.quantidade), 0);
+
+            document.getElementById("carrinho-contador").innerText = volumetriaTotal;
+            document.getElementById("carrinho-total").innerText = `R$ ${caixaFinanceiroTotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById("modal-total-valor").innerText = `R$ ${caixaFinanceiroTotal.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Controladores de visibilidade do modal flutuante
+        function exibirModalDialog() {
+            document.getElementById("modal-carrinho").style.display = "flex";
+            renderizarListaInternaModal();
+        }
+
+        function ocultarModalDialog() {
+            document.getElementById("modal-carrinho").style.display = "none";
+        }
+
+        // Fechar se clicar fora da caixa de diálogo
+        document.getElementById("modal-carrinho").addEventListener("click", (evento) => {
+            if (evento.target.id === "modal-carrinho") ocultarModalDialog();
+        });
+
+        // Construtor interno da lista de itens comprados
+        function renderizarListaInternaModal() {
+            const caixaDeLista = document.getElementById("carrinho-lista-itens");
+            caixaDeLista.innerHTML = "";
+
+            if (carrinho.length === 0) {
+                caixaDeLista.innerHTML = `<p class="empty-placeholder-text">A sua sacola está vazia.</p>`;
+                return;
+            }
+
+            carrinho.forEach(produtoComprado => {
+                const blocoItem = document.createElement("div");
+                blocoItem.className = "item-row";
+                blocoItem.innerHTML = `
+                    <div class="meta-details">
+                        <h5>${produtoComprado.nome}</h5>
+                        <p>R$ ${(produtoComprado.preco * produtoComprado.quantidade).toFixed(2).replace('.', ',')}</p>
+                    </div>
+                    <div class="stepper-widget">
+                        <button class="step-btn" onclick="mudarQuantidadeItem(${produtoComprado.id}, -1)"><i class="fa-solid fa-minus"></i></button>
+                        <span class="step-display">${produtoComprado.quantidade}</span>
+                        <button class="step-btn" onclick="mudarQuantidadeItem(${produtoComprado.id}, 1)"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                `;
+                caixaDeLista.appendChild(blocoItem);
+            });
+        }
+
+        // Formatador e despachante nativo da API do WhatsApp
+        function enviarPedidoWhatsApp() {
+            if (carrinho.length === 0) {
+                alert("Adicione peças à sua sacola antes de enviar!");
+                return;
+            }
+
+            let mensagemTexto = `${SITE_CONFIG.whatsappMessageBase}
+
+`;
+            
+            for (let idx = 0; idx < carrinho.length; idx++) {
+                let itemAtual = carrinho[idx];
+                mensagemTexto += `• *${itemAtual.quantidade}x* ${itemAtual.nome} (R$ ${itemAtual.preco.toFixed(2).replace('.', ',')} cada)
+`;
+            }
+            
+            const valorTotalCalculado = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+            mensagemTexto += `
+*Total:* R$ ${valorTotalCalculado.toFixed(2).replace('.', ',')}`;
+
+            const urlDeRedirecionamento = `https://api.whatsapp.com/send?phone=${SITE_CONFIG.whatsappNumber}&text=${encodeURIComponent(mensagemTexto)}`;
+            
+            window.open(urlDeRedirecionamento, "_blank");
+        }
+    </script>
+</body>
+</html>
